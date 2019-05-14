@@ -2,67 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void step(char last, char curr)
-{
-  char tmp;
-
-  if(curr == '\n')
-  {
-    /* check if the next char is a line spaces as well,
-       if so don't do a damn thing! */
-
-    tmp = getchar();
-
-    if(tmp == EOF)
-    {
-      /* kind of whacky, lets just output the newline and exit I suppose. */
-      putchar(curr);
-      return;
-    }
-    else if (tmp == '\n')
-    {
-      /* okay cool, just leave alone! */
-      /* can prob combine w/ func above */
-      putchar(curr);
-      putchar(tmp);
-      return;
-    }
-    else 
-    {
-      /* business as normal, here we don't want to put out the newline but we 
-         also really don't want to put out two whitespace characters right
-         next to each other. Reverse and make sure we're not! */
-
-      /* set last, then check if last and tmp are both spaces, if so only
-         write one! */
-
-      /* Well, fuck. We cannot seek on standard input */
-
-      if(last == ' ' && tmp == ' ')
-      {
-        /* no op */
-      }
-      else if(last == '\n' && curr == '\n' && (tmp != ' ' && tmp != '\n'))
-      {
-        /* lots of new characters in a row */
-        putchar(tmp);
-      }
-      else if(last != ' ' && tmp != ' ')
-      {
-        putchar(' ');
-        putchar(tmp);
-      }
-      else
-      {
-        putchar(tmp);
-      }
-    }
-  }
-  else
-  {
-    putchar(curr);
-  }
-}
+void step(char last, char curr);
 
 int main(void) 
 {
@@ -81,3 +21,66 @@ int main(void)
 
   return 0;
 }
+
+void step(char last, char curr)
+{
+  char tmp;
+
+  if(curr == '\n')
+  {
+    /* the interesting bits */
+
+    tmp = getchar();
+
+    if(tmp == EOF)
+    {
+      /* hmm, well that's it folks! */
+      putchar(curr);
+      exit(0);
+    }
+    else if (tmp == '\n')
+    {
+      /* Two newlines in a row. This is very much intentional. Print out both
+         and continue. */
+      putchar(curr);
+      putchar(tmp);
+      return;
+    }
+    else 
+    {
+      /* we have some special cases to check:
+         1. Two spaces in a row.
+         2. If we have tons of newlines in a row.
+         3. Two non-spaces in a row. */
+
+      /* It would have been really nice if lseek worded on STDIN_FILENO */
+
+      if(last == ' ' && tmp == ' ')
+      {
+        /* no op, since we already printed "last" */
+      }
+      else if(last == '\n' && curr == '\n' && (tmp != ' ' && tmp != '\n'))
+      {
+        /* tons of new characters ni a row. */
+        putchar(tmp);
+      }
+      else if(last != ' ' && tmp != ' ')
+      {
+        /* make sure we put spaces where we need them */
+        putchar(' ');
+        putchar(tmp);
+      }
+      else
+      {
+        /* business as usual */
+        putchar(tmp);
+      }
+    }
+  }
+  else
+  {
+    /* business as usual */
+    putchar(curr);
+  }
+}
+
