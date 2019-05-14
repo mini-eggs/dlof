@@ -43,6 +43,11 @@ void step(char last, char curr)
       {
         /* no op */
       }
+      else if(last == '\n' && curr == '\n' && (tmp != ' ' && tmp != '\n'))
+      {
+        /* lots of new characters in a row */
+        putchar(tmp);
+      }
       else if(last != ' ' && tmp != ' ')
       {
         putchar(' ');
