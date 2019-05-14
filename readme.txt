@@ -22,7 +22,7 @@ Usage:
 
 $ cat hi.txt | dlof
 
-Given the file "hi.txt" is wrapped it will print out the unwrapped versino to 
+Given the file "hi.txt" is wrapped it will print out the unwrapped version to 
 standard out.
 
 MIT licensed.
