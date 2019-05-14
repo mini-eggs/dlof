@@ -17,7 +17,6 @@ void step(char last, char curr)
     {
       /* kind of whacky, lets just output the newline and exit I suppose. */
       putchar(curr);
-      putchar(tmp);      
       return;
     }
     else if (tmp == '\n')
