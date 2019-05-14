@@ -25,6 +25,18 @@ $ cat hi.txt | dlof
 Given the file "hi.txt" is wrapped it will print out the unwrapped version to 
 standard out.
 
+Installation: 
+
+On an Arch Linux or Arch Linux derivative you can install via AUR. Assuming you
+have "yay" installed:
+
+$ yay -S dlof
+
+If you're not on an Arch Linux based distrobution clone this repo and run:
+
+$ make
+
+Then move the resulting "dlof" executable into your path.
+
 MIT licensed.
-                                                            
-                    
+
